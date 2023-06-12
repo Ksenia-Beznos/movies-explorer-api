@@ -52,8 +52,7 @@ const movieSchema = new mongoose.Schema({
     required: [true, 'заполните поле'],
   },
   movieId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Movie',
+    type: Number,
     required: [true, 'заполните поле'],
   },
   nameRU: {

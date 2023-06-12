@@ -1,13 +1,11 @@
 const allowedCors = [
-  // 'localhost:3000',
-  // 'http://localhost:3000',
-  // 'https://localhost:3000',
-  // 'http://localhost:3001',
-  // 'https://localhost:3001',
-  // 'https://mesto-yandex.nomoredomains.rocks',
-  // 'https://api.mesto-yandex.nomoredomains.rocks',
-  // 'http://mesto-yandex.nomoredomains.rocks',
-  // 'http://api.mesto-yandex.nomoredomains.rocks',
+  "localhost:1115",
+  "http://localhost:1115",
+  "https://localhost:1115",
+  "http://localhost:1115",
+  "https://localhost:1115",
+  'https://api.portfolio-diploma.nomoredomains.rocks',
+  'https://portfolio-diploma.nomoredomains.rocks',
 ];
 
 const cors = (req, res, next) => {

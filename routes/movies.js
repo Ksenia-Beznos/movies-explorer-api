@@ -12,6 +12,6 @@ const { movieCreate, movieId } = require("../utils/joiSchemes");
 
 router.get("/movies", auth, getMovies); // возвращает все сохранённые пользователем фильмы
 router.post("/movies", auth, celebrate(movieCreate), createMovie); // создаёт фильм
-router.delete("/movies/_id", auth, celebrate(movieId), deleteMovie); // удаляет сохранённый фильм по id
+router.delete("/movies/:id", auth, celebrate(movieId), deleteMovie); // удаляет сохранённый фильм по id
 
 module.exports = router;
