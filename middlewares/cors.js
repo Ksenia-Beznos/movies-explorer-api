@@ -1,8 +1,8 @@
 const allowedCors = [
   "localhost:1115",
-  "http://localhost:1115",
+  "http://localhost:3000",
   "https://localhost:1115",
-  "http://localhost:1115",
+  "http://localhost:3005",
   "https://localhost:1115",
   'https://api.portfolio-diploma.nomoredomains.rocks',
   'https://portfolio-diploma.nomoredomains.rocks',

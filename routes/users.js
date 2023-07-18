@@ -20,6 +20,6 @@ router.get('/users/me', auth, getAboutMe); // возвращает информ�
 router.patch('/users/me', auth, celebrate(userUpdateValidation), updateUser); // обновляет информацию о пользователе (email и имя)
 router.post('/signup', celebrate(userCreateValidation), createUser); // создаёт пользователя с переданными в теле email, password и name
 router.post('/signin', celebrate(userValidation), login); // проверяет переданные в теле почту, пароль и возвращает JWT
-router.post('/signout', logout); // разлогирование
+router.get('/signout', logout); // разлогирование
 
 module.exports = router;

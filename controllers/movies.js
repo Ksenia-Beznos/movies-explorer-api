@@ -61,7 +61,6 @@ const deleteMovie = async (req, res, next) => {
   try {
     const { id } = req.params;
     const userId = req.user._id;
-    console.log(id)
     const movie = await Movie.findById(id);
     if (!movie) {
       throw new Error404("Фильм не найден");

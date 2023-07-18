@@ -25,6 +25,7 @@ const getAboutMe = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { name, email } = req.body;
+    console.log(req.body);
     const user = await User.findByIdAndUpdate(
       req.user._id,
       { name, email },
@@ -90,7 +91,7 @@ const login = async (req, res, next) => {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.send({ message: 'Успешно' });
+    res.send(user);
   } catch (err) {
     next(err);
   }
