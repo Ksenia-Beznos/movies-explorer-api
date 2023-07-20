@@ -5,7 +5,7 @@ const Error400 = require("../errors/400");
 
 const getMovies = async (req, res, next) => {
   try {
-    const movies = await Movie.find({});
+    const movies = await Movie.find({ owner: req.user._id });
     res.send(movies);
   } catch (err) {
     next(err);
@@ -49,10 +49,11 @@ const createMovie = async (req, res, next) => {
       res.status(201).send(movie);
     }
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      next(new Error400('Некоррекные данные'));
-    } else {}
-    console.log(err)
+    if (err.name === "ValidationError") {
+      next(new Error400("Некоррекные данные"));
+    } else {
+    }
+    console.log(err);
     next(err);
   }
 };

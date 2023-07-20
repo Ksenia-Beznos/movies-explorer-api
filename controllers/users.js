@@ -1,11 +1,11 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const Error400 = require('../errors/400');
-const Error401 = require('../errors/401');
-const Error404 = require('../errors/404');
-const Error409 = require('../errors/409');
-const JWT_DEV = require('../utils/jwtDev');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const User = require("../models/user");
+const Error400 = require("../errors/400");
+const Error401 = require("../errors/401");
+const Error404 = require("../errors/404");
+const Error409 = require("../errors/409");
+const JWT_DEV = require("../utils/jwtDev");
 
 const { NODE_ENV } = process.env;
 const JWT_KEY = process.env.REACT_APP_JWT_SECRET;
@@ -14,7 +14,7 @@ const getAboutMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
-      throw new Error404('Пользователь не найден');
+      throw new Error404("Пользователь не найден");
     }
     res.send(user);
   } catch (err) {
@@ -29,16 +29,18 @@ const updateUser = async (req, res, next) => {
     const user = await User.findByIdAndUpdate(
       req.user._id,
       { name, email },
-      { new: true, runValidators: true },
+      { new: true, runValidators: true }
     );
     if (!user) {
-      throw new Error404('Пользователь не обновлен');
+      throw new Error404("Пользователь не обновлен");
     } else {
       res.send(user);
     }
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      next(new Error400('Некоррекные данные'));
+    if (err.name === "ValidationError") {
+      next(new Error400("Некоррекные данные"));
+    } else if (err.code === 11000) {
+      next(new Error409("Почта уже используется"));
     } else {
       next(err);
     }
@@ -62,11 +64,11 @@ const createUser = async (req, res, next) => {
     });
   } catch (err) {
     if (err.code === 11000) {
-      const conflict = new Error409('Email уже существует');
+      const conflict = new Error409("Email уже существует");
       next(conflict);
     }
-    if (err.name === 'ValidationError') {
-      next(new Error400('Некоррекные данные'));
+    if (err.name === "ValidationError") {
+      next(new Error400("Некоррекные данные"));
     } else {
       next(err);
     }
@@ -76,18 +78,18 @@ const createUser = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({ email }).select("+password");
     if (!user || !bcrypt.compareSync(password, user.password)) {
-      throw new Error401('Неверные почта или пароль');
+      throw new Error401("Неверные почта или пароль");
     }
 
     const token = jwt.sign(
       { _id: user._id },
-      NODE_ENV === 'production' ? JWT_KEY : JWT_DEV,
-      { expiresIn: '7d' },
+      NODE_ENV === "production" ? JWT_KEY : JWT_DEV,
+      { expiresIn: "7d" }
     );
 
-    res.cookie('jwt', token, {
+    res.cookie("jwt", token, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -99,7 +101,7 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
-    res.clearCookie('jwt').send({ message: 'Вы успешно вышли из аккаунта' });
+    res.clearCookie("jwt").send({ message: "Вы успешно вышли из аккаунта" });
   } catch (err) {
     next(err);
   }
